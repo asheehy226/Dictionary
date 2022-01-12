@@ -1,0 +1,89 @@
+package dictionarybuilder;
+import java.util.Scanner;
+import java.util.ArrayList;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.Collections;
+public class DictionaryBuilder {
+//sorting - find A's, send to front, ref end of A. Find B's, send to end of A's reference, ref end of B's, etc.
+//      repeat with second letter, going from beginning ref to ending ref, repeating your way down the string position
+//if it terminates, it is first
+    public static ArrayList dict = new ArrayList();
+    public static File encyc = new File("C:\\Users\\bwalker189\\Desktop\\Breyden Programs\\Encyclopedia.txt"); //instead of his directory it would be mine
+    public static void main(String[] args) throws FileNotFoundException {
+       
+//        String[] tmp = dictList();
+        dictList();
+    }
+ 
+   
+    public static void dictList() throws FileNotFoundException
+    {
+        try{
+        Scanner read = new Scanner(encyc);
+        //ArrayList dict = new ArrayList();
+        String curLn, curWr = "";
+        StringBuilder bldWr = new StringBuilder(curWr);
+        int ref=0, ref2=0, tmp = 0;
+        boolean flag;
+       
+        FileWriter wri = new FileWriter("dictionary.txt");
+       
+        while(read.hasNextLine() /* && tmp < 10000 */ ){
+            tmp++;
+            curLn = read.nextLine();
+            ref = 0;
+            ref2 = 0;
+            for(int i=0; i<curLn.length(); i++)
+            {
+                if(curLn.charAt(i)!='a' && curLn.charAt(i)!='b' && curLn.charAt(i)!='c' && curLn.charAt(i)!='d' && curLn.charAt(i)!='e' && curLn.charAt(i)!='f' && curLn.charAt(i)!='g' && curLn.charAt(i)!='h' && curLn.charAt(i)!='i' && curLn.charAt(i)!='j' && curLn.charAt(i)!='k' && curLn.charAt(i)!='l' && curLn.charAt(i)!='m' && curLn.charAt(i)!='n' && curLn.charAt(i)!='o' && curLn.charAt(i)!='p' && curLn.charAt(i)!='q' && curLn.charAt(i)!='r' && curLn.charAt(i)!='s' && curLn.charAt(i)!='t' && curLn.charAt(i)!='u' && curLn.charAt(i)!='v' && curLn.charAt(i)!='w' && curLn.charAt(i)!='x' && curLn.charAt(i)!='y' && curLn.charAt(i)!='z')
+                {
+                    curWr = curLn.substring(ref, i);
+                    curWr = curWr.trim();
+                    ref = i;
+                    flag = false;
+                    for(int j=0; j<curWr.length(); j++)
+                        if(curWr.charAt(j)!='a' && curWr.charAt(j)!='b' && curWr.charAt(j)!='c' && curWr.charAt(j)!='d' && curWr.charAt(j)!='e' && curWr.charAt(j)!='f' && curWr.charAt(j)!='g' && curWr.charAt(j)!='h' && curWr.charAt(j)!='i' && curWr.charAt(j)!='j' && curWr.charAt(j)!='k' && curWr.charAt(j)!='l' && curWr.charAt(j)!='m' && curWr.charAt(j)!='n' && curWr.charAt(j)!='o' && curWr.charAt(j)!='p' && curWr.charAt(j)!='q' && curWr.charAt(j)!='r' && curWr.charAt(j)!='s' && curWr.charAt(j)!='t' && curWr.charAt(j)!='u' && curWr.charAt(j)!='v' && curWr.charAt(j)!='w' && curWr.charAt(j)!='x' && curWr.charAt(j)!='y' && curWr.charAt(j)!='z')
+                            flag = true;
+                    if(curWr.length()>1){
+                        for(int j=0; j<dict.size(); j++)
+                        {
+                            if(curWr.toLowerCase().equals(dict.get(j).toString())) {
+                                flag = true;
+                                //System.out.println("AHHHH");
+                                j=dict.size();
+                            }
+                            else{}
+                        }
+                        if(!flag) dict.add(curWr.toLowerCase());
+                        else{}
+                        //ref = i;
+                    }
+                }
+                else
+                {
+                   
+                }
+            }
+        }
+        dict.add("a");
+        dict.trimToSize();
+        Collections.sort(dict);
+       
+            for(int i=0; i<dict.size(); i++) {
+                System.out.println(dict.get(i));
+                wri.write(dict.get(i).toString()+"\n");
+            }
+       
+         wri.close();
+        }
+        catch(IOException e){
+            System.out.println("...Oops...");
+        }
+        //return dict;
+    }
+
+}
